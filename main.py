@@ -1,83 +1,46 @@
-# name = input("Введіть ваше ім'я: ")
-# age = input("Введіть ваш вік: ")
-# print(f"Привіт {name} тобі {age}")
+class BankAccount:
+    def __init__(self, owner, number, balance=0):
+        self.owner = owner
+        self.number = number
+        self.balance = balance
 
+    def deposit(self, amount):
+        self.balance + amount
+        print(f"{self.owner} ви поповннили на {amount} грн баланс {self.balance} грн")
 
+    def withdraw(self, amount):
+        if amount < self.balance:
+            self.balance - amount
+            print(f"{self.owner} знято {amount} грн Залишок {self.balance} грн")
+        else:
+            print(f"{self.owner} недостатньо коштів")
 
-# age = int(input("Введіть скільки вам років"))
-# if age > 18:
-#     print("Вхід дозволено")
-# else:
-#     print("Вхід заборонено")
+class Bank:
+    def __init__(self):
+        self.accounts = {}
 
+    def add(self, acc):
+        self.accounts[acc.number] = acc
 
+    def transfer(self, from_num, to_num, amount):
+        a1, a2 = self.accounts.get(from_num), self.accounts.get(to_num)
+        if a1 and a2 and a1.balance > amount:
+            a1.balance - amount
+            a2.balance + amount
+            print(f"Переказ {amount} грн з {a1.owner} до {a2.owner}")
+        else:
+            print("Помилка переказу")
 
-# import random
+# Приклад
+b = Bank()
+a1 = BankAccount("Ваня", "001", 5000)
+a2 = BankAccount("Максім", "002", 3000)
+b.add(a1)
+b.add(a2)
 
-# a = random.randint(1, 10)
-# attempts = 3
+a1.deposit(1000)
+a2.withdraw(500)
+b.transfer("001", "002", 2000)
 
-# for i in range(attempts):
-#     a = int(input("Вгадайте число від 1 до 10: "))
-#     if a == number:
-#         print("Вітаю! Ви вгадали!")
-#         break
-#     elif a < number:
-#         print("Більше")
-#     else:
-#         print("Менше")
-# else:
-#     print(f"Гру завершено. Загадане число було {number}")
-
-
-
-# p = int(input("Введіть число з: "))
-# k = int(input("Введіть число по: "))
-
-# for i in range(p, k + 1):
-#     print(i, k=" ")
-
-
-
-# n = int(input("Введіть число: "))
-# faktorial = 1
-# for i in range(1, n + 1):
-#     faktorial *= i
-# print(f"Факторіал числа {n} = {faktorial}")
-
-
-
-# score = int(input("Введіть кількість балів: "))
-
-# if 0 <= score <= 49:
-#     print("Незадовільно")
-# elif 50 <= score <= 69:
-#     print("Задовільно")
-# elif 70 <= score <= 89:
-#     print("Добре")
-# elif 90 <= score <= 99:
-#     print("Відмінно")
-# elif 99 <= score <= 100:
-#     print("Ти геній")
-# else:
-#     print("Некоректна кількість балів")
-
-
-
-a = float(input("Введіть перше число: "))
-b = float(input("Введіть друге число: "))
-dia = input("Введіть дію: ")
-
-if dia == "+":
-    print(a + b)
-elif dia == "-":
-    print(a - b)
-elif dia == "*":
-    print(a * b)
-elif dia == "/":
-    if b == 0:
-        print("Ділення на нуль")
-    else:
-        print(a / b)
-else:
-    print("Невідома дія")
+print(f"{a1.owner} {a1.balance} грн")
+print(f"{a2.owner} {a2.balance} грн")
